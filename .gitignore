@@ -1,7 +1,4 @@
 
-# Создано https://www.toptal.com/developers/gitignore/api/windows
-# Отредактируйте на https://www.toptal.com/developers/gitignore?templates=windows
-
 ### Windows ###
 # Файлы кэша эскизов Windows
 Thumbs.db
@@ -27,5 +24,3 @@ $ RECYCLE.BIN /
 
 # Ярлыки Windows
 * .lnk
-
-# Конец https://www.toptal.com/developers/gitignore/api/windows
