@@ -1,0 +1,301 @@
+#tessa_exchange_format(Version:1, CreationTime:2020-11-16T08\:01\:10) {
+	#exchange_view(RowID:319cd0d3-f2d0-4690-98a4-70e84004178b, Alias:RetDocumentsView, Caption:Документы, ModifiedById:3db19fa0-228a-497f-873a-0250bf0a4ccb, ModifiedByName:Admin, FormatVersion:2, ModifiedDateTime:2020-11-16T07\:43\:59, GroupName:GPB.Retail.Views) {
+		#metadata {
+			#view(DefaultSortColumn:DocumentID, 
+				DefaultSortDirection:desc, 
+				Paging:always, 
+				MultiSelect:true, 
+				QuickSearchParam:DocumentNumber)
+
+			#reference(ColPrefix:Document,		RefSection:RetDocument,			DisplayValueColumn:DocumentNumber,				IsCard:true,	OpenOnDoubleClick:true)
+			#reference(ColPrefix:DocumentStatus,RefSection:RetDocumentStatus,	DisplayValueColumn:DocumentStatusName,			IsCard:true,	OpenOnDoubleClick:false)
+			#reference(ColPrefix:DocumentType,	RefSection:RetDocumentType,		DisplayValueColumn:DocumentTypeName,			IsCard:true,	OpenOnDoubleClick:false)
+			#reference(ColPrefix:DocumentBatch,	RefSection:RetBatch,			DisplayValueColumn:DocumentBatchBidExternalID,	IsCard:true,	OpenOnDoubleClick:false)
+			#reference(ColPrefix:BatchType,		RefSection:RetBatchType,		DisplayValueColumn:BatchTypeName,				IsCard:true,	OpenOnDoubleClick:false)
+
+			#column(Alias:DocumentID, 							Type:$RetDocument.ID,					Caption:ID,								Hidden:true,	SortBy:d.ID)
+			#column(Alias:CardCreationDate, 					Type:$DocumentCommonInfo.CreationDate,	Caption:Дата создания карточки,			Hidden:false)
+			#column(Alias:DocumentStatusID, 					Type:$RetDocument.StatusID,				Caption:ID cтатуса,						Hidden:true)
+			#column(Alias:DocumentStatusName, 					Type:$RetDocument.StatusName,			Caption:Статус,							Hidden:false,	SortBy:d.StatusName)
+			#column(Alias:DocumentBatchID, 						Type:$RetDocument.BatchID,				Caption:ID пакета,						Hidden:true)
+			#column(Alias:DocumentBatchBidExternalID,			Type:$RetDocument.BatchBidExternalID,	Caption:ID заявки,						Hidden:false,	SortBy:d.BatchBidExternalID)
+			#column(Alias:DocumentDate,							Type:$RetDocument.Date,					Caption:Дата документа,					Hidden:false,	SortBy:d.Date)
+			#column(Alias:DocumentNumber,						Type:$RetDocument.Number,				Caption:Номер документа,				Hidden:false,	SortBy:d.Number)
+			#column(Alias:DocumentAccountNumber,				Type:$RetWillDocument.AccountNumber,	Caption:Номер счета,					Hidden:false,	SortBy:d.AccountNumber)
+			#column(Alias:DocumentTypeID, 						Type:$RetDocument.TypeID,				Caption:ID типа документа, 				Hidden:true)
+			#column(Alias:DocumentTypeName, 					Type:$RetDocument.TypeName,				Caption:Тип документа,					Hidden:false,	SortBy:d.TypeName)
+			#column(Alias:IdentitySeries,						Type:$RetDocument.IdentitySeries,		Caption:ДУЛ. Серия,						Hidden:false,	SortBy:d.IdentitySeries)
+			#column(Alias:IdentityIssuedCode,					Type:$RetDocument.IdentityIssuedCode,	Caption:ДУЛ. Код подразделения,			Hidden:false,	SortBy:d.IdentityIssuedCode)
+			#column(Alias:IdentityIssued,						Type:$RetDocument.IdentityIssued,		Caption:ДУЛ. Кем выдан,					Hidden:false,	SortBy:d.IdentityIssued)
+			#column(Alias:DocumentQualityStatusID, 				Type:$RetDocumentQualityStatus.ID,		Caption:ID статуса качества документа,	Hidden:true)
+			#column(Alias:DocumentQualityStatusName,			Type:$RetDocumentQualityStatus.Name,	Caption:Статус качества документа,		Hidden:false,	SortBy:d.QualityStatusName)
+			#column(Alias:DocumentFilialCode,					Type:$RetWillDocument.FilialCode,		Caption:Код филиала,					Hidden:false,	SortBy:d.FilialCode)
+			#column(Alias:DocumentFilialName,					Type:$RetWillDocument.FilialName,		Caption:Наименование филиала,			Hidden:false,	SortBy:d.FilialName)
+			#column(Alias:BatchBidExternalNumber,				Type:$RetBatch.BidExternalNumber,		Caption:Номер заявки,					Hidden:false,	SortBy:d.BatchBidExternalNumber)
+			#column(Alias:BatchTypeID, 							Type:$RetBatchType.ID,					Caption:ID продукта,					Hidden:true)
+			#column(Alias:BatchTypeName, 						Type:$RetBatchType.Name,				Caption:Наименование продукта,			Hidden:false,	SortBy:d.BatchTypeName)
+			#if(Administrator)
+			{
+				#column(Alias:BatchPersonID,					Type:$RetBatchPersons.PersonID,			Caption:ID карточки клиента в пакете,	Hidden:false)
+				#column(Alias:BatchPersonExternalID,			Type:$RetPersonExternalIDs.ExternalID,	Caption:Внешний идентификатор клиента в пакете,	Hidden:false)
+				#column(Alias:DocumentPersonID,					Type:$RetDocument.PersonID,				Caption:ID карточки клиента в документе,Hidden:false)
+			}
+			{
+				#column(Alias:BatchPersonID,					Type:$RetBatchPersons.PersonID,			Caption:ID карточки клиента в пакете,	Hidden:true)
+				#column(Alias:BatchPersonExternalID,			Type:$RetPersonExternalIDs.ExternalID,	Caption:Внешний идентификатор клиента в пакете,	Hidden:true)
+				#column(Alias:DocumentPersonID,					Type:$RetDocument.PersonID,				Caption:ID карточки клиента в документе,Hidden:true)
+			}
+			#column(Alias:BatchPersonRoleName,					Type:$RetBatchPersons.RoleName,			Caption:Роль клиента в пакете,			Hidden:false)
+			#column(Alias:DocumentPaycontrolID,					Type:string,			Caption:Идентификатор Paycontrol,			Hidden:false)
+
+			#param(Alias:DocumentID,							Type:$RetDocument.ID,					Caption:ID документа,		Hidden:true)
+			#param(Alias:DocumentStatusID,						Type:$RetDocument.StatusID,				Caption:Статус документа,	RefSection:RetDocumentStatus) 
+			{
+				#autocomplete(View:RetDocumentStatusView,	Param:StatusName,		PopupColumns: 1)
+				#dropdown(View:RetDocumentStatusView,								PopupColumns: 1)
+			}
+			#param(Alias:DocumentBatchID,						Type:$RetDocument.BatchID,				Caption:ID пакета)
+			#param(Alias:DocumentBatchBidExternalID,			Type:$RetBatch.BidExternalID,			Caption:ID заявки,		Hidden:false)
+			#param(Alias:BatchBidExternalNumber,				Type:$RetBatch.BidExternalNumber,		Caption:Номер заявки,	Hidden:false)
+			#param(Alias:BatchTypeID,							Type:$RetBatchType.ID,					Caption:Наименование продукта,	RefSection:RetBatchType) 
+			{
+				#autocomplete(View:RetBatchTypesView,		Param:TypeName,			PopupColumns: 1)
+				#dropdown(View:RetBatchTypesView,									PopupColumns: 1)
+			}
+			#param(Alias:DocumentDate,							Type:$RetDocument.Date,					Caption:Дата документа)
+			#param(Alias:DocumentNumber,						Type:$RetDocument.Number,				Caption:Номер документа)
+			#param(Alias:DocumentAccountNumber,					Type:$RetWillDocument.AccountNumber,	Caption:Номер счета)
+
+			#param(Alias:DocumentTypeID,						Type:$RetDocument.TypeID,				Caption:Тип документа,			RefSection:RetDocumentType) 
+			{
+				#autocomplete(View:RetDocumentTypesView,	Param:TypeName,			PopupColumns: 2)
+				#dropdown(View:RetDocumentTypesView,								PopupColumns: 1 2)
+			}
+			#param(Alias:DocumentTypeName,						Type:$RetDocument.TypeName,				Caption:Наименование типа документа)
+			#param(Alias:IdentitySeries,						Type:$RetDocument.IdentitySeries,		Caption:ДУЛ. Серия)
+			#param(Alias:WillDocumentHeirBirthDate,				Type:$RetWillHeir.BirthDate,			Caption:Дата рождения наследника)
+			#param(Alias:WillDocumentHeirFIO,					Type:$RetWillHeir.FIO,					Caption:ФИО наследника)
+			#param(Alias:DocumentFilialCode,					Type:$RetWillDocument.FilialCode,		Caption:Код филиала,			Hidden:false)
+			#param(Alias:DocumentFilialName,					Type:$RetWillDocument.FilialName,		Caption:Наименование филиала,	Hidden:false)
+			#param(Alias:PersonExternalID,						Type:$RetPersonExternalIDs.ExternalID,	Caption:Идентификатор клиента во внешней системе,					Hidden:false, AllowedOperands:Equality)
+			#param(Alias:PersonExternalSystemID,				Type:$RetPersonExternalIDs.ExternalSystemID,Caption:ID внешней системы к которой относится идентификатор клиента,	Hidden:false, AllowedOperands:Equality, RefSection:ExternalSystem)
+			{
+				#autocomplete(View:RetExternalSystemView,	Param:SystemName,	PopupColumns:1)
+				#dropdown(View:RetExternalSystemView,							PopupColumns:1)
+			}
+
+			#param(Alias:DocumentTypeExternalID,					Type:$RetDocumentTypes.ExternalID,			Caption:Идентификатор типа документа во внешней системе,			Hidden:true, AllowedOperands:Equality)
+			#param(Alias:DocumentTypeExternalName,					Type:$RetDocumentTypes.ExternalName,		Caption:Наименование типа документа во внешней системе,				Hidden:false)
+			#param(Alias:DocumentTypeExternalSystemID,				Type:$RetDocumentTypes.ExternalSystemID,	Caption:ID внешней системы к которой относится тип документа,		Hidden:false, AllowedOperands:Equality, RefSection:ExternalSystem)
+			{
+				#autocomplete(View:RetExternalSystemView,	Param:SystemName,	PopupColumns:1)
+				#dropdown(View:RetExternalSystemView,							PopupColumns:1)
+			}
+
+			#param(Alias:BatchPersonID,							Type:$RetBatchPersons.PersonID,			Caption:ID карточки клиента в пакете,			Hidden:false)
+			#param(Alias:DocumentBatchPersonExternalID, 		Type:$RetPersonExternalIDs.ExternalID,	Caption:Внешний идентификатор клиента в пакете,	Hidden:true)
+			#param(Alias:DocumentPersonID,						Type:$RetDocument.PersonID,				Caption:ID карточки клиента в документе,		Hidden:false)
+			#param(Alias:BatchPersonRoleID,						Type:$RetBatchPersons.RoleID,			Caption:ID роли клиента,						Hidden:false, AllowedOperands:Equality, RefSection:RetPersonRole)
+			{
+				#autocomplete(View:RetPersonRoleView,	Param:RoleName,		PopupColumns:1)
+				#dropdown(View:RetPersonRoleView,							PopupColumns:1)
+			}
+			#param(Alias:DocumentPaycontrolID,							Type:string,			Caption:Идентификатор Paycontrol,			Hidden:false)
+		}
+		#description {
+			\#\#\#\# [Obsolete]
+
+			| Тип объекта | Наименование | Дата удаления |
+			| --- | --- | --- |
+			| Поисковый параметр | `DocumentBatchPersonExternalID` | 06.11.2020 |
+			| Колонка | `DocumentBatchPersonID` | 08.11.2020 |
+			| Колонка | `DocumentBatchPersonExternalID` | 08.11.2020 |
+		}
+		#ms_query {
+			declare @PersonExternalSystemID uniqueidentifier;
+			\#if\(PersonExternalSystemID\)
+			\{
+			    set @PersonExternalSystemID = \#param\(PersonExternalSystemID\);
+			\}
+			\{
+			    set @PersonExternalSystemID = '4d710f47-6dca-ea11-ad13-309c23b612b2'; /* Единый справочник физических лиц */
+			\}
+
+			select d.ID                              as DocumentID
+			     \, inst.Created                  	 as CardCreationDate
+			     \, d.StatusID                        as DocumentStatusID
+			     \, d.StatusName                      as DocumentStatusName
+			     \, d.BatchID                         as DocumentBatchID
+			     \, d.BatchBidExternalID              as DocumentBatchBidExternalID
+			     \, d.Date                            as DocumentDate
+			     \, d.Number                          as DocumentNumber
+			     \, d.AccountNumber                   as DocumentAccountNumber
+			     \, d.TypeID                          as DocumentTypeID
+			     \, d.TypeName                        as DocumentTypeName
+			     \, d.IdentitySeries                  as IdentitySeries
+			     \, d.IdentityIssuedCode              as IdentityIssuedCode
+			     \, d.IdentityIssued                  as IdentityIssued
+			     \, d.QualityStatusID 				 as DocumentQualityStatusID
+			     \, d.QualityStatusName				 as DocumentQualityStatusName
+			     \, d.FilialCode						 as DocumentFilialCode
+			     \, d.FilialName						 as DocumentFilialName
+			     \, b.BidExternalNumber				as BatchBidExternalNumber
+			     \, bt.ID							as BatchTypeID
+			     \, bt.Name							as BatchTypeName
+			     \, ps.PersonID 						as BatchPersonID
+			     \, ps.RoleName 						as BatchPersonRoleName
+			     \, psids.ExternalID 				as BatchPersonExternalID
+			     \, d.PersonID 						as DocumentPersonID
+			     \, d.PaycontrolID as DocumentPaycontrolID
+			from \(
+			     select d.ID
+			          \, d.StatusID
+			          \, d.StatusName
+			          \, d.BatchID
+			          \, d.BatchBidExternalID
+			          \, d.Date
+			          \, d.Number
+			          \, null					as AccountNumber
+			          \, d.TypeID
+			          \, d.TypeName
+			          \, d.IdentitySeries		as IdentitySeries
+			          \, d.IdentityIssuedCode	as IdentityIssuedCode
+			          \, d.IdentityIssued		as IdentityIssued
+			          \, null					as QualityStatusID
+			          \, null					as QualityStatusName
+			          \, null					as FilialCode
+			          \, null					as FilialName
+			          \, d.PersonID as PersonID
+			          \, null as PaycontrolID
+			     FROM RetDocument d WITH \(nolock\)
+			     union
+			     select d.ID
+			          \, d.StatusID
+			          \, d.StatusName
+			          \, d.BatchID				as BatchID
+			          \, d.BatchBidExternalID	as BatchBidExternalID
+			          \, d.Date
+			          \, d.Number
+			          \, d.AccountNumber			as AccountNumber
+			          \, d.TypeID
+			          \, d.TypeName
+			          \, null					as IdentitySeries
+			          \, null					as IdentityIssuedCode
+			          \, null					as IdentityIssued
+			          \, q.ID					as QualityStatusID
+			          \, q.Name					as QualityStatusName
+			          \, d.FilialCode			as FilialCode
+			          \, d.FilialName			as FilialName
+			          \, null as PersonID
+			          \, null as PaycontrolID
+			     from RetWillDocument d with \(nolock\)
+			     	left join RetDocumentQualityStatus q on d.QualityStatusID = q.ID
+			     union
+			     select d.ID
+				      \, d.StatusID
+				      \, d.StatusName
+				      \, d.BatchID					as BatchID
+				      \, d.BatchBidExternalID		as BatchBidExternalID
+				      \, d.Date
+				      \, d.Number
+				      \, null						as AccountNumber
+				      \, d.TypeID
+				      \, d.TypeName
+				      \, null						as IdentitySeries
+				      \, null						as IdentityIssuedCode
+				      \, null						as IdentityIssued
+				      \, null						as QualityStatusID
+				      \, null						as QualityStatusName
+				      \, null						as FilialCode
+				      \, null						as FilialName
+				      \, d.PersonID as PersonID
+				      \, null as PaycontrolID
+				from RetLogDocument d WITH \(nolock\)
+				union
+			    select d.ID
+				      \, d.StatusID
+				      \, d.StatusName
+				      \, d.BatchID				as BatchID
+				      \, d.BatchBidExternalID	as BatchBidExternalID
+				      \, d.Date
+				      \, d.Number
+				      \, null						as AccountNumber
+				      \, d.TypeID
+				      \, d.TypeName
+				      \, null						as IdentitySeries
+				      \, null						as IdentityIssuedCode
+				      \, null						as IdentityIssued
+				      \, null						as QualityStatusID
+				      \, null						as QualityStatusName
+				      \, null						as FilialCode
+				      \, null						as FilialName
+				      \, d.PersonID as PersonID
+				      \, d.PaycontrolID as PaycontrolID
+				from RetPaycontrolDocument d WITH \(nolock\)
+				\) d
+				left join Instances inst with \(nolock\) ON inst.ID = d.ID
+				left join RetBatch b with \(nolock\) on b.ID = d.BatchID
+			    left join RetBatchType bt with \(nolock\) on bt.ID = b.TypeID
+				left join RetBatchPersons ps with \(nolock\) on ps.ID = b.ID
+			    left join RetPersonExternalIDs psids with \(nolock\) on psids.ID = ps.PersonID
+			where 1=1
+				\#param\(DocumentID\,						d.ID\)
+				\#param\(DocumentStatusID\,				d.StatusID\)
+				\#param\(DocumentBatchID\,					d.BatchID\)
+				\#param\(DocumentBatchBidExternalID\,		d.BatchBidExternalID\)
+				\#param\(BatchBidExternalNumber\,			b.BidExternalNumber\)
+				\#param\(BatchTypeID\,						d.BatchTypeID\)
+				\#param\(DocumentDate\,					d.Date\)
+				\#param\(DocumentNumber\,					d.Number\)
+				\#param\(DocumentAccountNumber\,			d.AccountNumber\)
+				\#param\(DocumentTypeID\,					d.TypeID\)
+				\#param\(DocumentTypeName\,				d.TypeName\)
+				\#param\(IdentitySeries\,					d.IdentitySeries\)
+				\#if\(WillDocumentHeirBirthDate || WillDocumentHeirFIO\)
+				\{
+					and EXISTS \(
+						select top 1 d.ID 
+						from RetWillHeir h with \(nolock\)
+						where h.ID = d.ID 
+							\#param\(WillDocumentHeirBirthDate\,	h.BirthDate\) 
+							\#param\(WillDocumentHeirFIO\,			h.FIO\)
+						\)
+				\}
+				\#param\(DocumentFilialCode\,				d.FilialCode\)
+				\#param\(DocumentFilialName\,				d.FilialName\)
+				\#param\(BatchPersonID\, ps.PersonID\)
+				\#param\(DocumentPersonID\, d.PersonID\)
+				\#param\(BatchPersonRoleID\, ps.RoleID\)
+				\#param\(DocumentPaycontrolID\, d.PaycontrolID\)
+				\#if\(PersonExternalID || DocumentBatchPersonExternalID\)
+				\{
+					and exists\(select *
+							   from RetBatchPersons b with \(nolock\)
+							   left join RetPersonExternalIDs ids with \(nolock\) on ids.ID = b.PersonID
+					           where b.ID = d.BatchID
+					           and ids.ExternalSystemID = @PersonExternalSystemID
+					           \#param\(PersonExternalID\, ids.ExternalID\)
+							   \#param\(DocumentBatchPersonExternalID\, ids.ExternalID\)\)
+				\}
+				\#if\(DocumentTypeExternalID || DocumentTypeExternalName || DocumentTypeExternalSystemID\)
+				\{
+					and exists\(select *
+							   from RetDocumentTypes ids with \(nolock\)
+					           where ids.ID = d.ID
+					           \#param\(DocumentTypeExternalID\,		ids.ExternalID\)
+					           \#param\(DocumentTypeExternalName\,		ids.ExternalName\)
+							   \#param\(DocumentTypeExternalSystemID\,	ids.ExternalSystemID\)\)
+				\}
+			\#if\(Normal\)
+			\{ 
+				order by \#order_by
+				\#if\(PageOffset\) 
+				\{
+				    OFFSET \#param\(PageOffset\)-1 ROWS FETCH NEXT \#param\(PageLimit\) ROWS ONLY
+				\} 
+			\}
+		}
+		#pg_query {}
+		#role(RoleID:960a0e3e-3e3b-4786-8e70-d008ac22b76c, ViewID:319cd0d3-f2d0-4690-98a4-70e84004178b) 
+	}
+}
